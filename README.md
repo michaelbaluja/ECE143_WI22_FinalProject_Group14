@@ -59,6 +59,11 @@ scripts/
 │   ├── load_data.py
 │   ├── main.py
 │   └── visualization.py
+├── Data_Visualization/
+│   ├── histogram.py
+│   ├── pie_chart.py
+│   ├── word_cloud.py
+│   └── main.py
 └── cleaning.py
 README.md
 setup.py
