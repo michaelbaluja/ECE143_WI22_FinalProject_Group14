@@ -53,17 +53,19 @@ notebooks/
 ├── Exploratory_Analysis.ipynb
 └── Recipe recommendation based on ingredients.ipynb
 scripts/
+├── Data Visualization/
+│   ├── main.py
+│   ├── histogram.py
+│   ├── pie_chart.py
+│   └── word_cloud.py
 ├── Recommender System/
 │   ├── compute_similarity.py
 │   ├── getNewIngredients.py
 │   ├── load_data.py
 │   ├── main.py
 │   └── visualization.py
-├── Data_Visualization/
-│   ├── histogram.py
-│   ├── pie_chart.py
-│   ├── word_cloud.py
-│   └── main.py
+├── High Rating Reason/
+│   └── why_high_rating.py
 └── cleaning.py
 README.md
 setup.py
