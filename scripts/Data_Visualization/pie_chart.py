@@ -33,3 +33,20 @@ def pie_chart(data, data2):
     fig.update_traces(textposition='inside', textinfo='percent+label', insidetextorientation='radial')
     fig.show()
 
+    nutrition = data['nutrition'].tolist()
+    nu = [eval(i) for i in nutrition]
+    interval = {}
+    interval['Calories <= 200'] = len([i[0] for i in nu if i[0] <= 200])
+    interval['200 < Calories <= 400'] = len([i[0] for i in nu if 200 < i[0] <= 400])
+    interval['400 < Calories <= 600'] = len([i[0] for i in nu if 400 < i[0] <= 600])
+    interval['600 < Calories <= 800'] = len([i[0] for i in nu if 600 < i[0] <= 800])
+    interval['800 < Calories <= 1000'] = len([i[0] for i in nu if 800 < i[0] <= 1000])
+    interval['1000 < Calories'] = len([i[0] for i in nu if 1000 < i[0]])
+
+    col1 = [i for i in interval.keys()]
+    col2 = [i for i in interval.values()]
+    c = {'a': col1, 'b': col2}
+    da = pd.DataFrame(c)
+    fig = px.pie(da, values='b', names='a', title='Calories for Database')
+    fig.update_traces(textposition='inside', textinfo='percent+label', insidetextorientation='radial')
+    fig.show()
