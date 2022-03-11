@@ -3,9 +3,12 @@ from collections import defaultdict
 
 def loadData(aPath):
     """
-
-    :return:
+    load the data from the path
+    :param aPath: the path name to load
+    :return: f is the dataset, iPerR is the Reripe per ingredient, rPerI is the recipe per ingredient
     """
+    assert isinstance(aPath, str)
+
     f = pd.read_csv(aPath)
 
     iPerR = defaultdict(set)

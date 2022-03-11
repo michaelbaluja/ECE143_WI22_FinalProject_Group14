@@ -1,15 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 def plotBarh(num_list, prob, saveName):
     """
-
-    :param num_list:
-    :param prob:
-    :param saveName:
-    :return:
+    plot  the barh image of the input list
+    :param num_list: x
+    :param prob: y
+    :param saveName: the image save name
+    :return: none
     """
+    assert isinstance(num_list, list)
+    assert isinstance(prob, list)
+    assert isinstance(saveName, str)
+
     plt.barh(range(len(prob)), prob, tick_label=num_list)
     plt.savefig(saveName)
     plt.show()
@@ -17,11 +22,14 @@ def plotBarh(num_list, prob, saveName):
 
 def plotNutrientContent(f, num_list):
     """
-
-    :param f:
-    :param num_list:
-    :return:
+    plot nutrient content of the input recipes
+    :param f: the dataset
+    :param num_list: the
+    :return: none
     """
+    assert isinstance(f, pd.DataFrame)
+    assert isinstance(num_list, list)
+
     list1 = eval(f.iloc[f[f.name == num_list[0]].index.tolist()[0]]["nutrition"])
     list2 = eval(f.iloc[f[f.name == num_list[1]].index.tolist()[0]]["nutrition"])
     list3 = eval(f.iloc[f[f.name == num_list[2]].index.tolist()[0]]["nutrition"])
@@ -53,6 +61,15 @@ def plotNutrientContent(f, num_list):
     plt.show()
 
 def plotRecipeTimeAndStep(f, num_list):
+    """
+    plot time and steps of the input recipes
+    :param f:
+    :param num_list: the input list to plot
+    :return: none
+    """
+    assert isinstance(f, pd.DataFrame)
+    assert isinstance(num_list, list)
+
     k1, k2 = [], []
     for i in range(5):
         k1.append(f.iloc[f[f.name == num_list[i]].index.tolist()[0]]["minutes"])

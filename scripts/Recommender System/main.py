@@ -13,7 +13,7 @@ print(mostSimilar_recipe(query, iPerR))
 
 ing = {'cheese', 'pepper', 'onion', 'chicken'}
 similarities = mostSimilar_recipte_given_ingredients(ing, iPerR)
-for j in range(10):
+for j in range(5):
     print(similarities[j])
 
 num_list = [i[1] for i in similarities[0:5]]
@@ -24,7 +24,7 @@ plotRecipeTimeAndStep(f, num_list)
 
 ing = {'lettuce heart', 'butterscotch', 'low-fat bacon'}
 similarities = mostSimilar_recipte_given_ingredients(ing, iPerR)
-for j in range(10):
+for j in range(5):
     print(similarities[j])
 
 newIng = getNewIngredients(f, ing)

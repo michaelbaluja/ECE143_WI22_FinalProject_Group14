@@ -1,4 +1,17 @@
+import pandas as pd
+
 def getNewIngredients(f, ing):
+    """
+    if the ingredients are not in the dataset, find the similar ingredients in the dataset
+    as the new input to
+
+    :param f: the dataset
+    :param ing: input ingredients
+    :return: the similar ingredients
+    """
+    assert isinstance(f, pd.DataFrame)
+    assert isinstance(ing, set)
+
     ingredients = []
     for i in range(f.shape[0]):
         ingredients.extend(eval(f['ingredients'][i]))
