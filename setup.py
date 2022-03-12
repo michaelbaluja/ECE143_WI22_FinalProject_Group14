@@ -13,6 +13,8 @@ setup(
         'pandas',
         'plotly',
         'wordcloud',
-        'sklearn'
+        'sklearn',
+        'seaborn',
+        'torch'
     ]
 )
