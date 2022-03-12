@@ -66,7 +66,7 @@ scripts/
 │   └── visualization.py
 ├── PDV Analysis/
 │   └── final_pdv_analysis.py
-├── High Rating Reason/
+└── High Rating Reason/
     └── why_high_rating.py
 presentation/
 └── ECE143_Group14.pptx.pdf
