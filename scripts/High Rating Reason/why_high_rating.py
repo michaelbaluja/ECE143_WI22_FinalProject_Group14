@@ -1,15 +1,27 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
+# sns.set_theme( palette="pastel")
+import matplotlib as mpl
+from mpl_toolkits.mplot3d import Axes3D
+sns.set_theme(style="white", palette=None)
 def why_high_rating():
     '''This function draws plenty of pictures that shows why some recipes' ratings are high.
+    
+    This function has no input because it has pd.read inside the function. It will get all the data from 
+    RAW_interactions.csv and RAW_recipes.csv.
+    
+    And this function has no return. It only plots some pictures as result.
 
     -------
 
     '''
+    assert True
+    
+    
     recipes = pd.read_csv('RAW_recipes.csv')
     interactions = pd.read_csv('RAW_interactions.csv')
-    
     rating = interactions[['recipe_id','rating']]
     time = recipes[['id','minutes']]
     steps = recipes[['id','n_steps']]
@@ -69,35 +81,35 @@ def why_high_rating():
     rating2time = t2_time
     rating1time = t1_time
     
-    for i in range(910):
+    for i in range(0):
         rating5steps.pop(rating5time.index(max(rating5time)))
         rating5time.pop(rating5time.index(max(rating5time)))
-    for i in range(500):
+    for i in range(0):
         rating4steps.pop(rating4time.index(max(rating4time)))
         rating4time.pop(rating4time.index(max(rating4time)))
-    for i in range(200):
+    for i in range(0):
         rating3steps.pop(rating3time.index(max(rating3time)))
         rating3time.pop(rating3time.index(max(rating3time)))
-    for i in range(200):
+    for i in range(0):
         rating2steps.pop(rating2time.index(max(rating2time)))
         rating2time.pop(rating2time.index(max(rating2time)))
-    for i in range(300):
+    for i in range(0):
         rating1steps.pop(rating1time.index(max(rating1time)))
         rating1time.pop(rating1time.index(max(rating1time)))
     
-    for i in range(300):
+    for i in range(0):
         rating5steps.pop(rating5time.index(min(rating5time)))
         rating5time.pop(rating5time.index(min(rating5time)))
-    for i in range(200):
+    for i in range(0):
         rating4steps.pop(rating4time.index(min(rating4time)))
         rating4time.pop(rating4time.index(min(rating4time)))
-    for i in range(200):
+    for i in range(0):
         rating3steps.pop(rating3time.index(min(rating3time)))
         rating3time.pop(rating3time.index(min(rating3time)))
-    for i in range(200):
+    for i in range(0):
         rating2steps.pop(rating2time.index(min(rating2time)))
         rating2time.pop(rating2time.index(min(rating2time)))
-    for i in range(300):
+    for i in range(0):
         rating1steps.pop(rating1time.index(min(rating1time)))
         rating1time.pop(rating1time.index(min(rating1time)))
         
@@ -109,11 +121,19 @@ def why_high_rating():
     
     x = np.arange(5)+1
     Tmean = [Tmean1,Tmean2,Tmean3,Tmean4,Tmean5]
-    plt.plot(x,Tmean, color='#00AA00', label='label1', linewidth=1.0)
+    plt.scatter(x,Tmean, linewidth=5)
+    sns.regplot(list(x[0:4]),list(Tmean[0:4]),color='b')
+    sns.regplot(list(x[3:5]),list(Tmean[3:5]),color='b')
+    plt.ylim(73, 85)
     plt.xlabel('Rating', fontsize=12)
-    plt.ylabel('Mean Cooking Time', fontsize=12)
+    plt.ylabel('Mean Cooking Time (minutes)', fontsize=12)
+    title = "Cooking Time and Rating"
+    plt.title(title)
     plt.grid('on')
+    plt.savefig('Time.png', dpi=1000)
     plt.show()
+    
+
     
     Smean5 = sum(rating5steps)/len(rating5steps)
     Smean4 = sum(rating4steps)/len(rating4steps)
@@ -122,10 +142,16 @@ def why_high_rating():
     Smean1 = sum(rating1steps)/len(rating1steps)
     
     Smean = [Smean1,Smean2,Smean3,Smean4,Smean5]
-    plt.plot(x,Smean, color='#00AA00', label='label1', linewidth=1.0)
+    plt.scatter(x,Smean,linewidth=5)
+    sns.regplot(list(x[0:4]),list(Smean[0:4]),color='b')
+    sns.regplot(list(x[3:5]),list(Smean[3:5]),color='b')
+    plt.ylim(9, 10)
     plt.xlabel('Rating', fontsize=12)
     plt.ylabel('Mean Cooking Steps', fontsize=12)
+    title = "Cooking steps and Rating"
+    plt.title(title)
     plt.grid('on')
+    plt.savefig('Steps.png', dpi=1000)
     plt.show()
     
     coor5 = []
@@ -144,8 +170,6 @@ def why_high_rating():
     for i in range(len(rating1time)):
         coor1.append([rating1time[i],rating1steps[i],1])
     
-    
-    from mpl_toolkits.mplot3d import Axes3D
     
     x5 = []
     y5 = []
@@ -183,7 +207,6 @@ def why_high_rating():
         y1.append(coor1[i][1])
         z1.append(coor1[i][2])
         
-    fig = plt.figure()
     ax = plt.axes(projection='3d')
     ax.scatter3D(y5,z5,x5, cmap='b') 
     ax.scatter3D(y4,z4,x4, cmap='b') 
@@ -192,145 +215,148 @@ def why_high_rating():
     ax.scatter3D(y1,z1,x1, cmap='b')   
     plt.ylabel(u'rating', fontsize=12)
     plt.xlabel(u'steps', fontsize=12)
-    
-    plt.show()
-    
-    counter = 0
-    for i in range(len(rating5time)):
-        if(rating5time[i]>100):
-            counter += 1
-    percent5 = counter/len(rating5time)
-    counter = 0
-    for i in range(len(rating4time)):
-        if(rating4time[i]>100):
-            counter += 1
-    percent4 = counter/len(rating4time)
-    counter = 0
-    for i in range(len(rating3time)):
-        if(rating3time[i]>100):
-            counter += 1
-    percent3 = counter/len(rating3time)
-    counter = 0
-    for i in range(len(rating2time)):
-        if(rating2time[i]>100):
-            counter += 1
-    percent2 = counter/len(rating2time)
-    counter = 0
-    for i in range(len(rating1time)):
-        if(rating1time[i]>100):
-            counter += 1
-    percent1 = counter/len(rating1time)
-    
-    
-    
-    counter = 0
-    for i in range(len(rating5time)):
-        if(rating5steps[i]>20):
-            counter += 1
-    percent55 = counter/len(rating5time)
-    counter = 0
-    for i in range(len(rating4time)):
-        if(rating4steps[i]>20):
-            counter += 1
-    percent44 = counter/len(rating4time)
-    counter = 0
-    for i in range(len(rating3time)):
-        if(rating3steps[i]>20):
-            counter += 1
-    percent33 = counter/len(rating3time)
-    counter = 0
-    for i in range(len(rating2time)):
-        if(rating2steps[i]>20):
-            counter += 1
-    percent22 = counter/len(rating2time)
-    counter = 0
-    for i in range(len(rating1time)):
-        if(rating1steps[i]>20):
-            counter += 1
-    percent11 = counter/len(rating1time)
-    
-    x = np.arange(5)+1
-    p = [percent1,percent2,percent3,percent4,percent5]
-    plt.plot(x,p, color='#00AA00', label='label1', linewidth=1.0)
-    plt.xlabel('Rating', fontsize=12)
-    plt.ylabel('Percentage of time>100', fontsize=12)
-    plt.show()
-    
-    pp = [percent11,percent22,percent33,percent44,percent55]
-    plt.plot(x,pp, color='#00AA00', label='label1', linewidth=1.0)
-    plt.xlabel('Rating', fontsize=12)
-    plt.ylabel('Percentage of steps>20', fontsize=12)
-    plt.show()
-    
-    time_temp = {'1':rating1time,'2':rating2time,'3':rating3time,'4':rating4time,'5':rating5time}
-    time = pd.DataFrame(dict([(k,pd.Series(v)) for k,v in time_temp.items()])) 
-    time.boxplot()#这里，pandas自己有处理的过程，很方便哦。  
-    plt.ylabel("time")  
-    plt.xlabel("rating")#我们设置横纵坐标的标题。  
-    plt.show()
-    
-    steps_temp = {'1':rating1steps,'2':rating2steps,'3':rating3steps,'4':rating4steps,'5':rating5steps}
-    c = pd.DataFrame(dict([(k,pd.Series(v)) for k,v in steps_temp.items()])) 
-    c.boxplot()#这里，pandas自己有处理的过程，很方便哦。  
-    plt.ylabel("steps")  
-    plt.xlabel("rating")#我们设置横纵坐标的标题。  
-    title = "Cooking Complexity vs Rating"
+    title = "Steps,Time and Rating before Data Cleaning"
     plt.title(title)
-    plt.grid('on')
+    plt.savefig('3D.png', dpi=1000)
     plt.show()
     
+    # counter = 0
+    # for i in range(len(rating5time)):
+    #     if(rating5time[i]>100):
+    #         counter += 1
+    # percent5 = counter/len(rating5time)
+    # counter = 0
+    # for i in range(len(rating4time)):
+    #     if(rating4time[i]>100):
+    #         counter += 1
+    # percent4 = counter/len(rating4time)
+    # counter = 0
+    # for i in range(len(rating3time)):
+    #     if(rating3time[i]>100):
+    #         counter += 1
+    # percent3 = counter/len(rating3time)
+    # counter = 0
+    # for i in range(len(rating2time)):
+    #     if(rating2time[i]>100):
+    #         counter += 1
+    # percent2 = counter/len(rating2time)
+    # counter = 0
+    # for i in range(len(rating1time)):
+    #     if(rating1time[i]>100):
+    #         counter += 1
+    # percent1 = counter/len(rating1time)
     
     
-    grid = np.zeros((20,20))
-    cnt = np.zeros((20,20))
+    
+    # counter = 0
+    # for i in range(len(rating5time)):
+    #     if(rating5steps[i]>20):
+    #         counter += 1
+    # percent55 = counter/len(rating5time)
+    # counter = 0
+    # for i in range(len(rating4time)):
+    #     if(rating4steps[i]>20):
+    #         counter += 1
+    # percent44 = counter/len(rating4time)
+    # counter = 0
+    # for i in range(len(rating3time)):
+    #     if(rating3steps[i]>20):
+    #         counter += 1
+    # percent33 = counter/len(rating3time)
+    # counter = 0
+    # for i in range(len(rating2time)):
+    #     if(rating2steps[i]>20):
+    #         counter += 1
+    # percent22 = counter/len(rating2time)
+    # counter = 0
+    # for i in range(len(rating1time)):
+    #     if(rating1steps[i]>20):
+    #         counter += 1
+    # percent11 = counter/len(rating1time)
+    
+    # x = np.arange(5)+1
+    # p = [percent1,percent2,percent3,percent4,percent5]
+    # plt.plot(x,p, color='#00AA00', label='label1', linewidth=1.0)
+    # plt.xlabel('Rating', fontsize=12)
+    # plt.ylabel('Percentage of time>100', fontsize=12)
+    # plt.show()
+    
+    # pp = [percent11,percent22,percent33,percent44,percent55]
+    # plt.plot(x,pp, color='#00AA00', label='label1', linewidth=1.0)
+    # plt.xlabel('Rating', fontsize=12)
+    # plt.ylabel('Percentage of steps>20', fontsize=12)
+    # plt.show()
+    
+    # time_temp = {'1':rating1time,'2':rating2time,'3':rating3time,'4':rating4time,'5':rating5time}
+    # time = pd.DataFrame(dict([(k,pd.Series(v)) for k,v in time_temp.items()])) 
+    # time.boxplot()#这里，pandas自己有处理的过程，很方便哦。  
+    # plt.ylabel("time")  
+    # plt.xlabel("rating")#我们设置横纵坐标的标题。  
+    # plt.show()
+    
+    # steps_temp = {'1':rating1steps,'2':rating2steps,'3':rating3steps,'4':rating4steps,'5':rating5steps}
+    # c = pd.DataFrame(dict([(k,pd.Series(v)) for k,v in steps_temp.items()])) 
+    # c.boxplot()#这里，pandas自己有处理的过程，很方便哦。  
+    # plt.ylabel("steps")  
+    # plt.xlabel("rating")#我们设置横纵坐标的标题。  
+    # title = "Cooking Complexity vs Rating"
+    # plt.title(title)
+    # plt.grid('on')
+    # plt.show()
+    
+    
+    
+    grid = np.zeros((145,145))
+    cnt = np.zeros((145,145))
     
     # coor1[:,0].max()
     coor1 = np.array(coor1)
     temp1 = (coor1[:,0]-1)//40
     temp2 = coor1[:,1]-1
-    pos = (temp1<20) & (temp2<20)
+    pos = (temp1<1000) & (temp2<1000)
     grid[temp1[pos],temp2[pos]] += 1
     cnt[temp1[pos],temp2[pos]] += 1
     
     coor2 = np.array(coor2)
     temp1 = (coor2[:,0]-1)//40
     temp2 = coor2[:,1]-1
-    pos = (temp1<20) & (temp2<20)
+    pos = (temp1<1000) & (temp2<1000)
     grid[temp1[pos],temp2[pos]] += 2
     cnt[temp1[pos],temp2[pos]] += 1
     
     coor3 = np.array(coor3)
     temp1 = (coor3[:,0]-1)//40
     temp2 = coor3[:,1]-1
-    pos = (temp1<20) & (temp2<20)
+    pos = (temp1<1000) & (temp2<1000)
     grid[temp1[pos],temp2[pos]] += 3
     cnt[temp1[pos],temp2[pos]] += 1
     
     coor4 = np.array(coor4)
     temp1 = (coor4[:,0]-1)//40
     temp2 = coor4[:,1]-1
-    pos = (temp1<20) & (temp2<20)
+    pos = (temp1<1000) & (temp2<1000)
     grid[temp1[pos],temp2[pos]] += 4
     cnt[temp1[pos],temp2[pos]] += 1
     
     coor5 = np.array(coor5)
     temp1 = (coor5[:,0]-1)//40
     temp2 = coor5[:,1]-1
-    pos = (temp1<20) & (temp2<20)
+    pos = (temp1<1000) & (temp2<1000)
     grid[temp1[pos],temp2[pos]] += 5
     cnt[temp1[pos],temp2[pos]] += 1
     
     zeros_pos = (cnt == 0)
-    m = np.zeros((20,20))
+    m = np.zeros((145,145))
     m[~zeros_pos]= grid[~zeros_pos]/cnt[~zeros_pos]
-    
-    plt.imshow(m, cmap='hot', interpolation='nearest')
-    plt.ylabel("steps")  
-    plt.xlabel("time")#我们设置横纵坐标的标题。 
-    title = "Cooking Time,Steps heat map"
+
+    plt.imshow(m, cmap='YlGnBu', interpolation='nearest')
+    plt.colorbar()
+    plt.ylabel("Steps")  
+    plt.xlabel("Time (minutes)")#我们设置横纵坐标的标题。 
+    title = "Time,Steps and Rating"
     plt.title(title)
+    plt.savefig('Heat.png', dpi=1000)
     plt.show()
-    
     
     return 0
     
